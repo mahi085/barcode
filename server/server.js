@@ -14,7 +14,10 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // your frontend URL
+    origin: [
+      "http://localhost:5173",
+      "https://reliable-faloodeh-aa2f63.netlify.app"
+    ],
     credentials: true,
   })
 );
