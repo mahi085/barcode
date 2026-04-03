@@ -17,7 +17,8 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://reliable-faloodeh-aa2f63.netlify.app",
-      "http://192.168.1.5:5173"
+      "http://192.168.1.5:5173",
+      "https://barcode-frontend-xb0s.onrender.com"
     ],
     credentials: true,
   })
