@@ -15,7 +15,7 @@ const app = express();
 // ✅ Allowed origins
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://reliable-faloodeh-aa2f63.netlify.app",
+  "https://barcode-frontend-xb0s.onrender.com",
   "http://192.168.1.5:5173"
 ];
 
