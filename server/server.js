@@ -12,31 +12,53 @@ dotenv.config();
 
 const app = express();
 
+// ✅ Allowed origins
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://reliable-faloodeh-aa2f63.netlify.app",
+  "http://192.168.1.5:5173"
+];
+
+// ✅ CORS configuration
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://reliable-faloodeh-aa2f63.netlify.app",
-      "http://192.168.1.5:5173",
-      "https://barcode-frontend-xb0s.onrender.com"
-    ],
-    credentials: true,
+    origin: (origin, callback) => {
+      // Allow requests without origin (Postman, mobile apps, etc.)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true, // 🔥 enable if using cookies/auth
   })
 );
+
+// ✅ Handle preflight requests
+app.options("*", cors());
+
 app.use(express.json());
 
+// ✅ Connect DB
 connectDB();
 
+// ✅ Routes
 app.use("/api/product", productRoutes);
 app.use("/api/sale", salesRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/user", userRoutes);
 
+// ✅ Test route
 app.get("/", (req, res) => {
   res.send("POS Server Running");
 });
+
+// ✅ Port setup
 const port = process.env.PORT || 3000;
 
+// ✅ Start server
 app.listen(port, () => {
-  console.log("Server running on port 3000");
+  console.log(`Server running on port ${port}`);
 });
